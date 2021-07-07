@@ -1,0 +1,212 @@
+{UTF-8}
+policy start time=
+	10
+	~	Day [0,50]
+	~		|
+
+R0=
+	3.5
+	~	dmnl
+	~		|
+
+policy reduction fraction=
+	0
+	~	fraction [0,1]
+	~		|
+
+policy duration=
+	90
+	~	days
+	~		|
+
+reproduction ratio=
+	R0*(1-STEP(policy reduction fraction,policy start time)+STEP(policy reduction fraction\
+		,policy start time+policy duration))
+	~	people/person
+	~		|
+
+transmission rate=
+	reproduction ratio/duration*fraction susceptible
+	~	fraction/Day
+	~		|
+
+Infecting=
+	Infected*transmission rate
+	~	people/Day
+	~		|
+
+fraction susceptible=
+	Susceptible/Population
+	~	fraction
+	~		|
+
+duration=
+	7
+	~	days [1,30]
+	~		|
+
+Recovering=
+	Infected/duration
+	~	people/Day
+	~		|
+
+Infected= INTEG (
+	Infecting-Recovering,
+		Initial Infected)
+	~	people
+	~		|
+
+Recovered= INTEG (
+	Recovering,
+		0)
+	~	people
+	~		|
+
+Initial Infected=
+	1
+	~	person [0,20]
+	~		|
+
+Population=
+	8.45e+06
+	~	people [?,9e+06]
+	~		|
+
+Susceptible= INTEG (
+	-Infecting,
+		Population-Initial Infected)
+	~	people
+	~		|
+
+********************************************************
+	.Control
+********************************************************~
+		Simulation Control Parameters
+	|
+
+FINAL TIME  = 100
+	~	Day
+	~	The final time for the simulation.
+	|
+
+INITIAL TIME  = 0
+	~	Day
+	~	The initial time for the simulation.
+	|
+
+SAVEPER  = 
+        TIME STEP
+	~	Day [0,?]
+	~	The frequency with which output is stored.
+	|
+
+TIME STEP  = 0.25
+	~	Day [0,?]
+	~	The time step for the simulation.
+	|
+
+\\\---/// Sketch information - do not modify anything except names
+V300  Do not put anything below this section - it will be ignored
+*View 1
+$192-192-192,0,Times New Roman|12||0-0-0|0-0-0|0-0-255|-1--1--1|-1--1--1|96,96,80,0
+10,1,Infected,933,449,32,16,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+12,2,0,944,839,150,150,3,15,0,0,2,0,0,0,0,0,0,0,0,0
+Infected,Graph
+10,3,Susceptible,694,446,43,16,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,4,6,3,100,0,45,22,2,128,0,-1--1--1,|12||0-0-0,1|(772,447)|
+1,5,6,1,4,0,43,22,2,192,0,-1--1--1,|12||0-0-0,1|(860,447)|
+11,6,574,813,447,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,7,Infecting,813,471,35,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,8,Initial Infected,926,373,53,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,9,8,1,0,0,0,0,0,192,1,-1--1--1,,1|(928,404)|
+10,10,Population,692,377,40,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,11,10,3,0,0,0,0,0,192,1,-1--1--1,,1|(692,404)|
+1,12,8,3,1,0,0,0,0,192,1,-1--1--1,,1|(798,390)|
+10,13,Recovered,1146,449,40,16,3,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,14,16,1,100,0,0,22,0,192,0,-1--1--1,,1|(999,449)|
+1,15,16,13,4,0,0,22,0,192,0,-1--1--1,,1|(1075,449)|
+11,16,662,1039,449,6,8,34,3,0,0,1,0,0,0,0,0,0,0,0,0
+10,17,Recovering,1039,473,43,16,40,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,18,1,17,1,0,0,0,3,192,0,0-128-0,|12||0-0-0,1|(967,489)|
+10,19,duration,1147,518,32,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,20,19,17,0,0,0,0,1,192,0,0-0-0,|12||0-0-0,1|(1102,499)|
+12,21,0,812,190,150,150,3,15,0,0,2,0,0,0,0,0,0,0,0,0
+Infecting,graph
+12,22,0,1121,191,150,150,3,15,0,0,2,0,0,0,0,0,0,0,0,0
+Recovering,graph
+12,23,0,1249,840,150,150,3,15,0,0,2,0,0,0,0,0,0,0,0,0
+Recovered,graph
+12,24,0,639,838,150,150,3,15,0,0,2,0,0,0,0,0,0,0,0,0
+Susceptible,graph
+10,25,fraction susceptible,693,515,41,26,8,3,0,0,0,0,0,0,0,0,0,0,0,0
+1,26,3,25,1,0,0,0,1,192,0,255-0-0,|12||0-0-0,1|(689,481)|
+1,27,10,25,1,0,0,0,0,192,0,-1--1--1,,1|(632,445)|
+1,28,1,7,1,0,0,0,0,192,0,-1--1--1,,1|(897,496)|
+10,29,transmission rate,829,548,60,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,30,reproduction ratio,992,569,63,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,31,30,29,0,0,0,0,0,192,0,-1--1--1,,1|(915,559)|
+1,32,19,29,1,0,0,0,0,192,0,-1--1--1,,1|(983,528)|
+1,33,25,29,1,0,0,0,0,192,0,-1--1--1,,1|(748,545)|
+1,34,29,7,0,0,0,0,0,192,0,-1--1--1,,1|(822,516)|
+10,35,R0,1225,539,15,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,36,policy reduction fraction,1225,587,58,26,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+10,37,policy duration,1122,636,54,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,38,35,30,0,0,0,0,0,192,0,-1--1--1,,1|(1139,549)|
+1,39,36,30,0,0,0,0,0,192,0,-1--1--1,,1|(1117,578)|
+1,40,37,30,0,0,0,0,0,192,0,-1--1--1,,1|(1063,605)|
+10,41,policy start time,940,631,58,16,8,3,0,0,-1,0,0,0,0,0,0,0,0,0
+1,42,41,30,0,0,0,0,0,192,0,-1--1--1,,1|(961,605)|
+///---\\\
+:GRAPH Susceptibles_vs._Transmi
+:TITLE Susceptibles vs. Transmission
+:X-AXIS fraction susceptible
+:X-MIN 0
+:X-MAX 1
+:SCALE
+:VAR transmission rate
+
+:GRAPH People_Stocks
+:TITLE People Stocks
+:SCALE
+:VAR Susceptible
+:VAR Infected
+:VAR Recovered
+
+:GRAPH People_Flows
+:TITLE People Flows
+:SCALE
+:VAR Infecting
+:VAR Recovering
+:L<%^E!@
+1:SIR Policy.vdfx
+9:SIR Policy
+22:day,days
+22:people,person
+23:0
+15:0,0,0,0,0,0
+19:80,0
+27:0,
+34:0,
+42:1
+72:0
+73:0
+4:Time
+5:Population
+35:Date
+36:YYYY-MM-DD
+37:2000
+38:1
+39:1
+40:4
+41:0
+76:0
+77:0
+78:0
+79:0
+80:0
+81:0
+24:0
+25:100
+26:100
+75:
+43:
