@@ -1,0 +1,1 @@
+# Simulation-of-convid-19-pandanic-to-reduce-the-impact-in-Quebec
